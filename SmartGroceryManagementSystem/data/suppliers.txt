@@ -1,0 +1,24 @@
+SUP-001|Cargills Food City|Rohan Fernando|+94 11 2345678|cargills@cargills.lk|No 40, York Street, Colombo 01
+SUP-002|Keells Supermarket|Chandrika Rajapaksha|+94 11 3456789|keells@johnkeells.lk|No 200, Union Place, Colombo 02
+SUP-003|Lanka Fresh Foods|Sunil Perera|+94 77 1234567|lankafresh@gmail.com|No 15, Galle Road, Colombo 03
+SUP-004|Ceylon Grocers|Nimal Wijesinghe|+94 71 2345678|ceylongrocers@yahoo.com|No 25, Kandy Road, Kadawatha
+SUP-005|Eco Green Farms|Dilani Samaraweera|+94 76 3456789|ecogreen@gmail.com|No 10, Negombo Road, Gampaha
+SUP-006|Spice Island Exporters|Sarath Gunasekara|+94 81 4567890|spiceisland@hotmail.com|No 50, Peradeniya Road, Kandy
+SUP-007|Arpico Super Centre|Harsha de Silva|+94 11 5678901|arpico@arpico.lk|No 150, High Level Road, Nugegoda
+SUP-008|Lanka Organic Foods|Kumari Munasinghe|+94 72 6789012|lankaorganic@gmail.com|No 30, Panadura Road, Moratuwa
+SUP-009|Fresh Island Traders|Mahendra Raju|+94 77 7890123|freshisland@outlook.com|No 45, Main Street, Jaffna
+SUP-010|Ceylon Tea Masters|Lalith Wickramasinghe|+94 71 8901234|ceylonteamasters@gmail.com|No 8, Temple Road, Kandy
+SUP-011|Southern Grocery Supply|Priyantha Bandara|+94 76 9012345|southerngrocery@gmail.com|No 20, Matara Road, Galle
+SUP-012|Nuwara Eliya Fresh|Ruwan Jayaweera|+94 52 0123456|nuwaraeliya@gmail.com|No 5, Badulla Road, Nuwara Eliya
+SUP-013|Eastern Spice Traders|Mohamed Rizvi|+94 65 1234567|easternspice@gmail.com|No 15, Trincomalee Road, Batticaloa
+SUP-014|Good Market Farmers|Anoma Dissanayake|+94 77 2345678|goodmarket@gmail.com|No 3, Horton Place, Colombo 07
+SUP-015|Lanka Dairy Products|Prasanna Weerasinghe|+94 71 3456789|lankadairy@gmail.com|No 12, Kandy Road, Kurunegala
+SUP-016|Ceylon Seafood Company|Anton Perera|+94 77 4567890|ceyonseafood@gmail.com|No 25, Beach Road, Negombo
+SUP-017|Hill Country Fresh|Kamal Rathnayake|+94 81 5678901|hillcountry@gmail.com|No 10, Hatton Road, Gampola
+SUP-018|Dry Zone Traders|Wijitha Kumara|+94 66 6789012|dryzone@gmail.com|No 8, Anuradhapura Road, Dambulla
+SUP-019|Lanka Rice Millers|Saman Edirisinghe|+94 72 7890123|lankarice@gmail.com|No 50, Polonnaruwa Road, Habarana
+SUP-020|Coconut Growers Co-op|Palitha Weerakkody|+94 74 8901234|coconutcoop@gmail.com|No 15, Kurunegala Road, Chilaw
+SUP-021|Jaffna Agro Farms|Sivasubramaniam|+94 77 9012345|jaffnaagro@gmail.com|No 30, KKS Road, Jaffna
+SUP-022|Ruhuna Spices|Chamara Silva|+94 71 0123456|ruhunaspices@gmail.com|No 18, Matara Road, Tangalle
+SUP-023|Kandy Mountain Growers|Siriwardena Bandara|+94 81 1234567|kandymountain@gmail.com|No 10, Peradeniya Road, Kandy
+SUP-024|Lanka Fruit Exporters|Janaka Fonseka|+94 77 2345678|lankafruit@gmail.com|No 5, Negombo Road, Ja-Ela

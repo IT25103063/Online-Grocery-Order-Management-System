@@ -1,0 +1,12 @@
+1|admin_super|123|admin@smartgrocery.com|ADM-001
+517836b2|sarmi1|123|sasikaransarmilan576@gmail.com|ADM-NEW
+bf3f31f4|admin|admin|sasikaransarmilan576@gmail.com|ADM-NEW
+5b5cb85f|admin2|admin2|test@test.com|ADM-NEW
+AD-001|superadmin|super123|super@example.com|SUPER_ADMIN
+dbf5f55f|testadmin|123|test@test.com|MANAGER
+4b7475ac|admin6|admin6|test@test.com|MANAGER
+9c90def1|admin7|admin|test@test.com|MANAGER
+AD-001|superadmin|super123|super@example.com|SUPER_ADMIN
+AD-002|admin|admin123|admin@example.com|MANAGER
+AD-003|staff_manager|manager123|manager@example.com|MANAGER
+AD-004|support_team|support123|support@example.com|MANAGER

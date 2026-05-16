@@ -1,0 +1,15 @@
+1|john_customer|password123|john@example.com|Standard
+2|jane_customer|pass456|jane@example.com|Premium
+c55eaeab|sarmi|123|sasikaransarmilan576@gmail.com|Standard
+d6401d39|sarmi12|A6xnQhbz4Vx2HuGl4lXwZ5U2I8iziLRFnhP5eNfIRvQ=|sasikaransarmilan576@gmail.com|Standard
+9ece6f36|admin3|admin3|test@test.com|Standard
+f767e0e8|admin4|admin4|test@test.com|Standard
+fb4b34d1|sarmi7|sarmi7|test@test.com|Standard
+U-001|customer1|customer123|customer1@example.com|CUSTOMER
+U-002|customer2|customer123|customer2@example.com|CUSTOMER
+U-003|john_doe|john123|john@example.com|CUSTOMER
+U-004|jane_smith|jane123|jane@example.com|CUSTOMER
+U-005|mike_wilson|mike123|mike@example.com|CUSTOMER
+U-006|sarah_jones|sarah123|sarah@example.com|CUSTOMER
+U-007|david_brown|david123|david@example.com|CUSTOMER
+U-008|lisa_white|lisa123|lisa@example.com|CUSTOMER

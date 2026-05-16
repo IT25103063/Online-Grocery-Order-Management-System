@@ -1,0 +1,4 @@
+REV-100|P-101|john_customer|5|Absolutely delicious milk! Will buy again.|VERIFIED|ORD-1001|2024-05-13
+REV-101|P-101|alice_guest|4|Good quality, but a bit pricey.|PUBLIC|NONE|2024-05-12
+REV-AFEC5|P-101|fb4b34d1|5|good|PUBLIC|NONE|2026-05-14
+REV-E7CB4|P-101|AD-001|5|good|PUBLIC|NONE|2026-05-16
