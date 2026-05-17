@@ -1,0 +1,2 @@
+CUST-A1B2C3D4,John Doe,password123,john@example.com,customer,active,0771234567,123 Main St Colombo,1995-04-28
+CUST-E5F6G7H8,Mary Silva,mary2025,mary@example.com,customer,active,0779876543,45 Galle Rd Colombo,1998-12-25

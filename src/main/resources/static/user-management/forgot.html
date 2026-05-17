@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshGrocer – Forgot Password</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+<body>
+
+<div class="auth-wrapper">
+
+    <!-- Left Panel -->
+    <div class="auth-left">
+        <div class="auth-left-inner">
+            <div class="brand-logo">🔑</div>
+            <h1 class="brand-name">FreshGrocer</h1>
+            <p class="brand-tagline">Reset your password securely</p>
+
+            <div class="brand-features">
+                <div class="feature-item">🔒 Enter your email to verify</div>
+                <div class="feature-item">🔑 Set a new password</div>
+                <div class="feature-item">✅ Login with new password</div>
+            </div>
+        </div>
+
+        <div class="auth-left-footer">
+            © 2025 FreshGrocer. All rights reserved.
+        </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="auth-right">
+        <div class="auth-form-box">
+
+            <!-- Progress Steps -->
+            <div class="progress-steps">
+
+                <div class="step active" id="dot1">
+                    <div class="step-circle">1</div>
+                    <span>Verify Email</span>
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step" id="dot2">
+                    <div class="step-circle">2</div>
+                    <span>New Password</span>
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step" id="dot3">
+                    <div class="step-circle">3</div>
+                    <span>Done</span>
+                </div>
+
+            </div>
+
+            <!-- Error Box -->
+            <div class="error-msg-box" id="forgotError" style="display:none;"></div>
+
+            <!-- STEP 1 -->
+            <div id="step1">
+
+                <div class="auth-top">
+                    <h2>Forgot Password?</h2>
+                    <p>Enter your registered email to reset your password.</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+
+                    <div class="input-wrap">
+                        <span class="input-icon">📧</span>
+
+                        <input type="email"
+                               id="forgot-email"
+                               placeholder="you@example.com">
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="verifyEmail()">
+                    Verify Email →
+                </button>
+
+                <p class="auth-switch" style="margin-top:1rem;">
+                    Remember your password?
+                    <a href="login.html">Sign in</a>
+                </p>
+
+            </div>
+
+            <!-- STEP 2 -->
+            <div id="step2" style="display:none;">
+
+                <div class="auth-top">
+                    <h2>Set New Password</h2>
+                    <p id="verifiedEmailLabel"></p>
+                </div>
+
+                <div class="form-group">
+                    <label>New Password</label>
+
+                    <div class="input-wrap">
+                        <span class="input-icon">🔑</span>
+
+                        <input type="password"
+                               id="new-pass"
+                               placeholder="Min. 8 characters">
+
+                        <span class="input-eye"
+                              onclick="toggleForgotPass('new-pass')">
+                              👁
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm New Password</label>
+
+                    <div class="input-wrap">
+                        <span class="input-icon">🔑</span>
+
+                        <input type="password"
+                               id="confirm-pass"
+                               placeholder="Repeat new password">
+
+                        <span class="input-eye"
+                              onclick="toggleForgotPass('confirm-pass')">
+                              👁
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Password Strength -->
+                <div class="pass-strength">
+
+                    <div class="strength-bar">
+                        <div class="strength-fill" id="strengthFill"></div>
+                    </div>
+
+                    <span class="strength-label" id="strengthLabel">
+                        Enter new password
+                    </span>
+
+                </div>
+
+                <div class="step-btns">
+
+                    <button class="btn-secondary" onclick="goStep(1)">
+                        ← Back
+                    </button>
+
+                    <button class="btn-primary" onclick="doReset()">
+                        Reset Password
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- STEP 3 -->
+            <div id="step3" style="display:none;">
+
+                <div class="reset-success-box">
+
+                    <div style="font-size:4rem;text-align:center;">✅</div>
+
+                    <h2>Password Reset!</h2>
+
+                    <p>
+                        Your password has been successfully updated.
+                        You can now sign in with your new password.
+                    </p>
+
+                    <a href="login.html"
+                       class="btn-primary"
+                       style="display:block;
+                              text-align:center;
+                              text-decoration:none;
+                              margin-top:1.5rem;">
+
+                        Go to Login →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    let verifiedEmail = '';
+
+    function goStep(step) {
+
+        document.getElementById('step1').style.display = 'none';
+        document.getElementById('step2').style.display = 'none';
+        document.getElementById('step3').style.display = 'none';
+
+        document.getElementById('step' + step).style.display = 'block';
+
+        document.querySelectorAll('.step').forEach((s, i) => {
+            s.classList.toggle('active', i < step);
+        });
+
+        document.getElementById('forgotError').style.display = 'none';
+    }
+
+    function verifyEmail() {
+
+        const email = document.getElementById('forgot-email').value.trim();
+        const errBox = document.getElementById('forgotError');
+
+        if (!email) {
+            errBox.textContent = '❌ Please enter your email.';
+            errBox.style.display = 'block';
+            return;
+        }
+
+        // Check email from data.js
+        const users = FreshGrocer.getAllUsers();
+
+        const found = users.find(u => u.email === email);
+
+        if (!found) {
+            errBox.textContent = '❌ No account found with this email.';
+            errBox.style.display = 'block';
+            return;
+        }
+
+        verifiedEmail = email;
+
+        document.getElementById('verifiedEmailLabel').textContent =
+            '✅ Email verified: ' + email;
+
+        goStep(2);
+    }
+
+    function doReset() {
+
+        const np = document.getElementById('new-pass').value;
+        const cp = document.getElementById('confirm-pass').value;
+        const errBox = document.getElementById('forgotError');
+
+        if (!np || np.length < 8) {
+
+            errBox.textContent =
+                '❌ Password must be at least 8 characters.';
+
+            errBox.style.display = 'block';
+            return;
+        }
+
+        if (np !== cp) {
+
+            errBox.textContent = '❌ Passwords do not match.';
+            errBox.style.display = 'block';
+            return;
+        }
+
+        const success = FreshGrocer.resetPassword(verifiedEmail, np);
+
+        if (success) {
+
+            goStep(3);
+
+        } else {
+
+            errBox.textContent =
+                '❌ Something went wrong. Try again.';
+
+            errBox.style.display = 'block';
+        }
+    }
+
+    function toggleForgotPass(id) {
+
+        const inp = document.getElementById(id);
+
+        inp.type =
+            inp.type === 'password'
+            ? 'text'
+            : 'password';
+    }
+
+    // Password Strength
+    document.getElementById('new-pass')
+        .addEventListener('input', function () {
+
+        const val = this.value;
+
+        const fill = document.getElementById('strengthFill');
+        const label = document.getElementById('strengthLabel');
+
+        let strength = 0;
+
+        if (val.length >= 8) strength++;
+        if (/[A-Z]/.test(val)) strength++;
+        if (/[0-9]/.test(val)) strength++;
+        if (/[^A-Za-z0-9]/.test(val)) strength++;
+
+        const colors = [
+            '#ff4444',
+            '#ff8800',
+            '#ffcc00',
+            '#2e7d47'
+        ];
+
+        const labels = [
+            'Weak',
+            'Fair',
+            'Good',
+            'Strong'
+        ];
+
+        fill.style.width = (strength * 25) + '%';
+
+        fill.style.background =
+            colors[strength - 1] || '#eee';
+
+        label.textContent =
+            labels[strength - 1] || 'Enter password';
+    });
+
+</script>
+
+</body>
+</html>

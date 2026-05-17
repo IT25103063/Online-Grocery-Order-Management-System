@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshGrocer – Register</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+
+<body>
+
+<div class="auth-wrapper">
+
+    <!-- LEFT SIDE -->
+    <div class="auth-left">
+
+        <div class="auth-left-inner">
+
+            <div class="brand-logo">🛒</div>
+
+            <h1 class="brand-name">
+                FreshGrocer
+            </h1>
+
+            <p class="brand-tagline">
+                Join thousands of happy shoppers
+            </p>
+
+            <div class="brand-features">
+
+                <div class="feature-item">
+                    🎁 Welcome discount on first order
+                </div>
+
+                <div class="feature-item">
+                    🎂 Birthday 50% off your total bill
+                </div>
+
+                <div class="feature-item">
+                    📦 Track your orders live
+                </div>
+
+                <div class="feature-item">
+                    🌿 100% fresh guaranteed
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="auth-left-footer">
+            © 2025 FreshGrocer. All rights reserved.
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="auth-right">
+
+        <div class="auth-form-box register-box">
+
+            <div class="auth-top">
+
+                <h2>Create Account</h2>
+
+                <p>
+                    Fill in your details to get started for free.
+                </p>
+
+            </div>
+
+            <!-- Progress -->
+            <div class="progress-steps">
+
+                <div class="step active" id="step1-dot">
+
+                    <div class="step-circle">1</div>
+
+                    <span>Personal</span>
+
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step" id="step2-dot">
+
+                    <div class="step-circle">2</div>
+
+                    <span>Account</span>
+
+                </div>
+
+                <div class="step-line"></div>
+
+                <div class="step" id="step3-dot">
+
+                    <div class="step-circle">3</div>
+
+                    <span>Birthday</span>
+
+                </div>
+
+            </div>
+
+            <!-- Error -->
+            <div class="error-msg-box"
+                 id="regError"
+                 style="display:none;">
+            </div>
+
+            <!-- STEP 1 -->
+            <div class="form-step" id="formStep1">
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>Full Name</label>
+
+                        <div class="input-wrap">
+
+                            <span class="input-icon">👤</span>
+
+                            <input type="text"
+                                   id="reg-name"
+                                   placeholder="John Doe">
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Phone Number</label>
+
+                        <div class="input-wrap">
+
+                            <span class="input-icon">📱</span>
+
+                            <input type="tel"
+                                   id="reg-phone"
+                                   placeholder="+94 77 123 4567">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Delivery Address</label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-icon">📍</span>
+
+                        <input type="text"
+                               id="reg-address"
+                               placeholder="123 Main Street, Colombo">
+
+                    </div>
+
+                </div>
+
+                <button class="btn-primary"
+                        onclick="nextStep(2)">
+
+                    Continue →
+
+                </button>
+
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="form-step"
+                 id="formStep2"
+                 style="display:none;">
+
+                <div class="form-group">
+
+                    <label>Email Address</label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-icon">📧</span>
+
+                        <input type="email"
+                               id="reg-email"
+                               placeholder="you@example.com">
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-icon">🔒</span>
+
+                        <input type="password"
+                               id="reg-password"
+                               placeholder="Min. 8 characters">
+
+                        <span class="input-eye"
+                              onclick="toggleRegPass()">
+
+                              👁
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Confirm Password</label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-icon">🔒</span>
+
+                        <input type="password"
+                               id="reg-confirm"
+                               placeholder="Repeat password">
+
+                    </div>
+
+                </div>
+
+                <div class="step-btns">
+
+                    <button class="btn-secondary"
+                            onclick="nextStep(1)">
+
+                        ← Back
+
+                    </button>
+
+                    <button class="btn-primary"
+                            onclick="nextStep(3)">
+
+                        Continue →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="form-step"
+                 id="formStep3"
+                 style="display:none;">
+
+                <div class="birthday-info-box">
+
+                    <div class="bday-icon">
+                        🎂
+                    </div>
+
+                    <div>
+
+                        <h4>Birthday Benefit</h4>
+
+                        <p>
+                            On your birthday,
+                            get <strong>50% off</strong>
+                            your total order if it's above
+                            <strong>Rs. 1,000</strong>!
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Your Birthday</label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-icon">🎂</span>
+
+                        <input type="date"
+                               id="reg-birthday">
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label class="checkbox-label">
+
+                        <input type="checkbox"
+                               id="reg-terms">
+
+                        I agree to the
+                        <a href="#">Terms & Conditions</a>
+
+                    </label>
+
+                </div>
+
+                <div class="step-btns">
+
+                    <button class="btn-secondary"
+                            onclick="nextStep(2)">
+
+                        ← Back
+
+                    </button>
+
+                    <button class="btn-primary"
+                            onclick="doRegister()">
+
+                        🎉 Create My Account
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <p class="auth-switch">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Sign in
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    function nextStep(step) {
+
+        const errBox =
+            document.getElementById('regError');
+
+        errBox.style.display = 'none';
+
+        // STEP 1 VALIDATION
+        if (step === 2) {
+
+            const name =
+                document.getElementById('reg-name')
+                .value.trim();
+
+            const phone =
+                document.getElementById('reg-phone')
+                .value.trim();
+
+            const address =
+                document.getElementById('reg-address')
+                .value.trim();
+
+            if (!name || !phone || !address) {
+
+                errBox.textContent =
+                    '❌ Please fill all fields.';
+
+                errBox.style.display = 'block';
+
+                return;
+            }
+        }
+
+        // STEP 2 VALIDATION
+        if (step === 3) {
+
+            const email =
+                document.getElementById('reg-email')
+                .value.trim();
+
+            const pass =
+                document.getElementById('reg-password')
+                .value;
+
+            const confirm =
+                document.getElementById('reg-confirm')
+                .value;
+
+            if (!email || !pass) {
+
+                errBox.textContent =
+                    '❌ Please fill all fields.';
+
+                errBox.style.display = 'block';
+
+                return;
+            }
+
+            if (pass !== confirm) {
+
+                errBox.textContent =
+                    '❌ Passwords do not match.';
+
+                errBox.style.display = 'block';
+
+                return;
+            }
+
+            if (pass.length < 8) {
+
+                errBox.textContent =
+                    '❌ Password must be at least 8 characters.';
+
+                errBox.style.display = 'block';
+
+                return;
+            }
+        }
+
+        document.querySelectorAll('.form-step')
+            .forEach(s => s.style.display = 'none');
+
+        document.getElementById('formStep' + step)
+            .style.display = 'block';
+
+        document.querySelectorAll('.step')
+            .forEach((s, i) =>
+                s.classList.toggle('active', i < step)
+            );
+    }
+
+    function toggleRegPass() {
+
+        const inp =
+            document.getElementById('reg-password');
+
+        inp.type =
+            inp.type === 'password'
+            ? 'text'
+            : 'password';
+    }
+
+    function doRegister() {
+
+        const errBox =
+            document.getElementById('regError');
+
+        if (!document.getElementById('reg-terms').checked) {
+
+            errBox.textContent =
+                '❌ Please agree to Terms & Conditions.';
+
+            errBox.style.display = 'block';
+
+            return;
+        }
+
+        const user = {
+
+            username :
+                document.getElementById('reg-name')
+                .value.trim(),
+
+            phone :
+                document.getElementById('reg-phone')
+                .value.trim(),
+
+            address :
+                document.getElementById('reg-address')
+                .value.trim(),
+
+            email :
+                document.getElementById('reg-email')
+                .value.trim(),
+
+            password :
+                document.getElementById('reg-password')
+                .value,
+
+            birthday :
+                document.getElementById('reg-birthday')
+                .value,
+        };
+
+        const result =
+            FreshGrocer.registerUser(user);
+
+        if (result.success) {
+
+            window.location.href =
+                'login.html?registered=true';
+
+        } else {
+
+            errBox.textContent =
+                '❌ ' + result.message;
+
+            errBox.style.display = 'block';
+        }
+    }
+
+</script>
+
+</body>
+</html>

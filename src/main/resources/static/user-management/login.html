@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshGrocer – Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+<body>
+
+<div class="auth-wrapper">
+
+    <div class="auth-left">
+        <div class="auth-left-inner">
+
+            <div class="brand-logo">🛒</div>
+
+            <h1 class="brand-name">FreshGrocer</h1>
+
+            <p class="brand-tagline">
+                Your daily fresh grocery destination
+            </p>
+
+            <div class="brand-features">
+                <div class="feature-item">✅ Fresh produce daily</div>
+                <div class="feature-item">🚚 Fast doorstep delivery</div>
+                <div class="feature-item">🎂 Birthday special discounts</div>
+                <div class="feature-item">🔒 Safe & secure checkout</div>
+            </div>
+
+        </div>
+
+        <div class="auth-left-footer">
+            © 2025 FreshGrocer. All rights reserved.
+        </div>
+    </div>
+
+    <div class="auth-right">
+
+        <div class="auth-form-box">
+
+            <div class="auth-top">
+                <h2>Sign in</h2>
+                <p>Welcome back! Please enter your details.</p>
+            </div>
+
+            <!-- Success message after registration -->
+            <div class="success-msg" id="regSuccess" style="display:none;">
+                ✅ Registered successfully! Please sign in.
+            </div>
+
+            <!-- Error message -->
+            <div class="error-msg-box"
+                 id="loginError"
+                 style="display:none;">
+            </div>
+
+            <!-- Role Toggle -->
+            <div class="role-toggle">
+
+                <button class="role-btn active"
+                        id="btn-customer"
+                        onclick="setRole('customer')">
+
+                    🛒 Customer
+
+                </button>
+
+                <button class="role-btn"
+                        id="btn-admin"
+                        onclick="setRole('admin')">
+
+                    ⚙️ Admin
+
+                </button>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Email Address</label>
+
+                <div class="input-wrap">
+
+                    <span class="input-icon">📧</span>
+
+                    <input type="email"
+                           id="loginEmail"
+                           placeholder="you@example.com"
+                           required>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <div class="input-wrap">
+
+                    <span class="input-icon">🔒</span>
+
+                    <input type="password"
+                           id="loginPassword"
+                           placeholder="••••••••"
+                           required>
+
+                    <span class="input-eye"
+                          onclick="togglePass()">
+
+                          👁
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="form-options">
+
+                <label class="remember-me">
+                    <input type="checkbox">
+                    Remember me
+                </label>
+
+                <a href="forgot.html" class="forgot-link">
+                    Forgot password?
+                </a>
+
+            </div>
+
+            <button class="btn-primary" onclick="doLogin()">
+                Sign in to FreshGrocer
+            </button>
+
+            <div class="auth-divider">
+                <span>or</span>
+            </div>
+
+            <a href="home.html" class="btn-guest">
+                🛍 Browse as Guest
+            </a>
+
+            <p class="auth-switch">
+
+                Don't have an account?
+
+                <a href="register.html">
+                    Create one free
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    // Show success message if came from register
+    if (window.location.search.includes('registered=true')) {
+        document.getElementById('regSuccess').style.display = 'block';
+    }
+
+    // If already logged in go to profile
+    if (FreshGrocer.getSession()) {
+        window.location.href = 'profile.html';
+    }
+
+    let selectedRole = 'customer';
+
+    function setRole(role) {
+
+        selectedRole = role;
+
+        document.getElementById('btn-customer')
+            .classList.toggle('active', role === 'customer');
+
+        document.getElementById('btn-admin')
+            .classList.toggle('active', role === 'admin');
+    }
+
+    function togglePass() {
+
+        const inp = document.getElementById('loginPassword');
+
+        inp.type =
+            inp.type === 'password'
+            ? 'text'
+            : 'password';
+    }
+
+    function doLogin() {
+
+        const email =
+            document.getElementById('loginEmail').value.trim();
+
+        const password =
+            document.getElementById('loginPassword').value;
+
+        const errBox =
+            document.getElementById('loginError');
+
+        if (!email || !password) {
+
+            errBox.textContent =
+                '❌ Please fill in all fields.';
+
+            errBox.style.display = 'block';
+
+            return;
+        }
+
+        const result =
+            FreshGrocer.loginUser(
+                email,
+                password,
+                selectedRole
+            );
+
+        if (result.success) {
+
+            // Redirect based on role
+            if (selectedRole === 'admin') {
+
+                window.location.href = 'profile.html';
+
+            } else {
+
+                window.location.href = 'profile.html';
+            }
+
+        } else {
+
+            errBox.textContent =
+                '❌ ' + result.message;
+
+            errBox.style.display = 'block';
+        }
+    }
+
+</script>
+
+</body>
+</html>
