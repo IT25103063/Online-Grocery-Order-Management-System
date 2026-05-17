@@ -10,11 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@SuppressWarnings("null")
 public class ProductServiceImpl implements IProductService {
 
     private final ProductDAO productDAO;
@@ -32,8 +30,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    @Transactional
-    public Product createProduct(Product product) {
+        public Product createProduct(Product product) {
         if (product.getCategory() != null && product.getCategory().getCategoryId() != null) {
             Category category = categoryDAO.findById(product.getCategory().getCategoryId())
                     .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
@@ -43,8 +40,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    @Transactional
-    public Product updateProduct(Integer id, Product productDetails) {
+        public Product updateProduct(Integer id, Product productDetails) {
         Product product = getProductById(id);
         
         product.setName(productDetails.getName());
@@ -66,17 +62,16 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    @Transactional
-    public void deleteProduct(Integer id) {
+        public void deleteProduct(Integer id) {
         Product product = getProductById(id);
         productDAO.delete(product);
     }
 
     @Override
-    @Transactional
-    public Product toggleProductStatus(Integer id) {
+        public Product toggleProductStatus(Integer id) {
         Product product = getProductById(id);
         product.setIsActive(!product.getIsActive());
         return productDAO.save(product);
     }
 }
+

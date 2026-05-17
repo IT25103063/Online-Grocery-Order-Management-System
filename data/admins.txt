@@ -1,0 +1,21 @@
+﻿[ {
+  "adminId" : 1,
+  "fullName" : "Admin User",
+  "email" : "admin@grocery.com",
+  "passwordHash" : "$2a$10$N9qo8uLOickgx2ZMRZoMye.IjZQQp7E0CzGJOqHYk1NOBokTFnjXu",
+  "role" : "super_admin",
+  "phone" : "+91 99999 00000",
+  "isActive" : true,
+  "createdAt" : "2026-05-17T14:00:00",
+  "updatedAt" : "2026-05-17T14:00:00"
+}, {
+  "adminId" : 2,
+  "fullName" : "Store Manager",
+  "email" : "manager@grocery.com",
+  "passwordHash" : "$2a$10$N9qo8uLOickgx2ZMRZoMye.IjZQQp7E0CzGJOqHYk1NOBokTFnjXu",
+  "role" : "manager",
+  "phone" : "+91 88888 00000",
+  "isActive" : true,
+  "createdAt" : "2026-05-17T14:00:00",
+  "updatedAt" : "2026-05-17T14:00:00"
+} ]

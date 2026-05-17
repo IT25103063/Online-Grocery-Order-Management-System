@@ -1,0 +1,41 @@
+[ {
+  "id" : "CUST001",
+  "name" : "John Doe",
+  "email" : "john@example.com",
+  "phone" : "9876543210",
+  "orders" : 5,
+  "totalSpent" : 4500,
+  "joined" : "2026-05-01",
+  "status" : "Active",
+  "address" : "Apartment 4B, Green Valley, Mumbai"
+}, {
+  "id" : "CUST002",
+  "name" : "Jane Smith",
+  "email" : "jane@example.com",
+  "phone" : "9876543211",
+  "orders" : 2,
+  "totalSpent" : 1200,
+  "joined" : "2026-05-03",
+  "status" : "Active",
+  "address" : "House 12, Park Avenue, Pune"
+}, {
+  "id" : "CUST003",
+  "name" : "Tharkuri Vijay",
+  "email" : "Gommalatrisha@Sidechick.com",
+  "phone" : "1680000000",
+  "orders" : 3,
+  "totalSpent" : 1200,
+  "joined" : "2026-05-04",
+  "status" : "Active",
+  "address" : "No.456 , Panaiyur , Chennai"
+}, {
+  "id" : "CUST004",
+  "name" : "Lickshaan XXXX",
+  "email" : "Woooooow@idontknow.com",
+  "phone" : "16546468946513241",
+  "orders" : 10,
+  "totalSpent" : 52000,
+  "joined" : "2026-05-10",
+  "status" : "Active",
+  "address" : "No.4896 , subramaniyapuram , Trichy"
+} ]

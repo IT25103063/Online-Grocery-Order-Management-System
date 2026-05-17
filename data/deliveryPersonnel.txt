@@ -1,0 +1,15 @@
+[ {
+  "id" : 1,
+  "name" : "Rahul Kumar",
+  "phone" : "9988776655",
+  "vehicle" : "Motorcycle",
+  "activeOrders" : 0,
+  "status" : "Available"
+}, {
+  "id" : 2,
+  "name" : "Amit Singh",
+  "phone" : "8877665544",
+  "vehicle" : "Bicycle",
+  "activeOrders" : 1,
+  "status" : "Busy"
+} ]

@@ -1,0 +1,7 @@
+[ {
+  "date" : "2026-05-15",
+  "product" : "Fresh Broccoli",
+  "change" : "-2",
+  "newStock" : 8,
+  "reason" : "Sale ORD1001"
+} ]

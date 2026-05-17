@@ -1,20 +1,109 @@
-/* ===== MOCK DATA ===== */
-const MOCK_CATEGORIES = [
-  { id: 1, name: 'Fruits', description: 'Fresh seasonal fruits', image: '🍎', productsCount: 0, status: 'Active' },
-  { id: 2, name: 'Vegetables', description: 'Farm fresh vegetables', image: '🥦', productsCount: 0, status: 'Active' },
-  { id: 3, name: 'Dairy', description: 'Milk, cheese, and dairy products', image: '🧀', productsCount: 0, status: 'Active' },
-  { id: 4, name: 'Bakery', description: 'Fresh bread and baked goods', image: '🍞', productsCount: 0, status: 'Active' },
-  { id: 5, name: 'Beverages', description: 'Drinks and juices', image: '🥤', productsCount: 0, status: 'Active' },
-  { id: 6, name: 'Snacks', description: 'Chips, cookies and snacks', image: '🍪', productsCount: 0, status: 'Inactive' }
-];
-const MOCK_PRODUCTS = [];
-const MOCK_CUSTOMERS = [];
-const MOCK_ORDERS = [];
-const MOCK_DELIVERY_PERSONNEL = [];
-const MOCK_PROMOTIONS = [];
-const STOCK_HISTORY = [];
+let products = [];
+let orders = [];
+let customers = [];
+let categories = [];
+let promotions = [];
+let deliveryPersonnel = [];
+let stockHistory = [];
 
 const NOTIFICATIONS = [];
+
+// Helper to save all data to our text-file backend
+async function saveData() {
+  const data = {
+    products,
+    orders,
+    customers,
+    categories,
+    promotions,
+    deliveryPersonnel,
+    stockHistory
+  };
+  try {
+    await fetch('http://localhost:8080/api/data', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+  } catch (error) {
+    console.error('Failed to save data to text file:', error);
+  }
+}
+
+// Helper to load data from our text-file backend
+// Helper to load data from our text-file backend with a rich fallback
+async function loadData() {
+  try {
+    const response = await fetch('http://localhost:8080/api/data');
+    if (response.ok) {
+      const data = await response.json();
+      products = data.products || [];
+      orders = data.orders || [];
+      customers = data.customers || [];
+      categories = data.categories || [];
+      promotions = data.promotions || [];
+      deliveryPersonnel = data.deliveryPersonnel || [];
+      stockHistory = data.stockHistory || [];
+      
+      // If categories are empty on a successful fetch, seed basic layout
+      if (categories.length === 0) {
+        useFallbackData(false);
+      }
+    } else {
+      throw new Error('Server returned non-OK status');
+    }
+  } catch (error) {
+    console.warn('Backend offline. Loading offline mock data fallback.', error);
+    useFallbackData(true);
+  }
+}
+
+function useFallbackData(showWarning) {
+  categories = [
+    { id: 1, name: 'Fruits', description: 'Fresh seasonal fruits', image: '🍎', status: 'Active' },
+    { id: 2, name: 'Vegetables', description: 'Farm fresh vegetables', image: '🥦', status: 'Active' },
+    { id: 3, name: 'Dairy', description: 'Milk, cheese, and dairy products', image: '🧀', status: 'Active' },
+    { id: 4, name: 'Bakery', description: 'Fresh bread and baked goods', image: '🍞', status: 'Active' },
+    { id: 5, name: 'Beverages', description: 'Drinks and juices', image: '🥤', status: 'Active' }
+  ];
+
+  products = [
+    { id: 1, name: 'Organic Apples', category: 'Fruits', unit: 'kg', mrp: 250, price: 220, stock: 45, minStock: 10, image: '🍎', status: 'Active' },
+    { id: 2, name: 'Fresh Broccoli', category: 'Vegetables', unit: 'kg', mrp: 180, price: 150, stock: 8, minStock: 15, image: '🥦', status: 'Active' },
+    { id: 3, name: 'Whole Milk', category: 'Dairy', unit: 'L', mrp: 120, price: 110, stock: 30, minStock: 10, image: '🥛', status: 'Active' },
+    { id: 4, name: 'Brown Bread', category: 'Bakery', unit: 'piece', mrp: 90, price: 80, stock: 0, minStock: 5, image: '🍞', status: 'Active' },
+    { id: 5, name: 'Orange Juice', category: 'Beverages', unit: 'L', mrp: 200, price: 180, stock: 25, minStock: 8, image: '🍊', status: 'Active' }
+  ];
+
+  customers = [
+    { id: 'CUST001', name: 'John Doe', email: 'john@example.com', phone: '9876543210', orders: 5, totalSpent: 4500, joined: '2026-05-01', status: 'Active', address: 'Apartment 4B, Green Valley, Mumbai' },
+    { id: 'CUST002', name: 'Jane Smith', email: 'jane@example.com', phone: '9876543211', orders: 2, totalSpent: 1200, joined: '2026-05-03', status: 'Active', address: 'House 12, Park Avenue, Pune' }
+  ];
+
+  orders = [
+    { id: 'ORD1001', customerId: 'CUST001', customer: 'John Doe', phone: '9876543210', address: 'Apartment 4B, Green Valley, Mumbai', items: [{ name: 'Organic Apples', qty: 2, price: 220 }, { name: 'Whole Milk', qty: 1, price: 110 }], subtotal: 550, delivery: 30, discount: 0, total: 580, payment: 'COD', status: 'Pending', date: '2026-05-15', timeline: [{ step: 'Order Placed', time: '10:30 AM' }] },
+    { id: 'ORD1002', customerId: 'CUST002', customer: 'Jane Smith', phone: '9876543211', address: 'House 12, Park Avenue, Pune', items: [{ name: 'Orange Juice', qty: 1, price: 180 }], subtotal: 180, delivery: 50, discount: 0, total: 230, payment: 'Online', status: 'Delivered', date: '2026-05-15', timeline: [{ step: 'Order Placed', time: '11:00 AM' }, { step: 'Delivered', time: '12:30 PM' }] }
+  ];
+
+  promotions = [
+    { id: 1, code: 'SAVE10', type: 'Percentage', value: 10, minOrder: 500, maxDiscount: 100, usageLimit: 100, usageCount: 15, validFrom: '2026-05-01', validTo: '2026-06-01', status: 'Active' }
+  ];
+
+  deliveryPersonnel = [
+    { id: 1, name: 'Rahul Kumar', phone: '9988776655', vehicle: 'Motorcycle', activeOrders: 0, status: 'Available' },
+    { id: 2, name: 'Amit Singh', phone: '8877665544', vehicle: 'Bicycle', activeOrders: 1, status: 'Busy' }
+  ];
+
+  stockHistory = [
+    { date: '2026-05-15', product: 'Fresh Broccoli', change: '-2', newStock: 8, reason: 'Sale ORD1001' }
+  ];
+
+  if (showWarning) {
+    setTimeout(() => {
+      showToast('Java Backend Offline! Running on offline local mock data.', 'warning');
+    }, 1000);
+  }
+}
 
 function formatDate(d) { if (!d) return '-'; const dt = new Date(d); return String(dt.getDate()).padStart(2, '0') + '/' + String(dt.getMonth() + 1).padStart(2, '0') + '/' + dt.getFullYear() }
 function formatCurrency(n) { return 'Rs ' + Number(n).toLocaleString('en-LK') }
@@ -29,20 +118,19 @@ function showToast(msg, type) {
   c.appendChild(t);
   setTimeout(function () { t.style.animation = 'toastOut .3s ease forwards'; setTimeout(function () { t.remove() }, 300) }, 4000);
   t.onclick = function () { t.remove() };
+  
+  // Sync state back to text file on successful actions
+  if (type === 'success' || !type || type === 'info') {
+    saveData();
+  }
 }
 
 let currentPage = 'dashboard';
-let products = [...MOCK_PRODUCTS];
-let orders = [...MOCK_ORDERS];
-let customers = [...MOCK_CUSTOMERS];
-let categories = [...MOCK_CATEGORIES];
-let promotions = [...MOCK_PROMOTIONS];
-let deliveryPersonnel = [...MOCK_DELIVERY_PERSONNEL];
-let stockHistory = [...STOCK_HISTORY];
 let orderPage = 1; const ordersPerPage = 8;
 let confirmCallback = null;
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
+  await loadData(); // Load data from text file first
   initTheme(); checkAuth(); initLogin(); initSidebar(); initTopbar(); initNavigation();
   initDashboard(); initOrders(); initProducts(); initCategories(); initInventory();
   initCustomers(); initDelivery(); initReports(); initPromotions(); initSettings(); initModals();

@@ -1,0 +1,100 @@
+[ {
+  "id" : 1,
+  "name" : "Organic Apples",
+  "category" : "Fruits",
+  "unit" : "kg",
+  "mrp" : 250,
+  "price" : 220,
+  "stock" : 45,
+  "minStock" : 10,
+  "image" : "\uD83C\uDF4E",
+  "status" : "Active"
+}, {
+  "id" : 2,
+  "name" : "Fresh Broccoli",
+  "category" : "Vegetables",
+  "unit" : "kg",
+  "mrp" : 180,
+  "price" : 150,
+  "stock" : 8,
+  "minStock" : 15,
+  "image" : "\uD83E\uDD66",
+  "status" : "Active"
+}, {
+  "id" : 3,
+  "name" : "Whole Milk",
+  "category" : "Dairy",
+  "unit" : "L",
+  "mrp" : 120,
+  "price" : 110,
+  "stock" : 30,
+  "minStock" : 10,
+  "image" : "\uD83E\uDD5B",
+  "status" : "Active"
+}, {
+  "id" : 4,
+  "name" : "Brown Bread",
+  "category" : "Bakery",
+  "unit" : "piece",
+  "mrp" : 90,
+  "price" : 80,
+  "stock" : 0,
+  "minStock" : 5,
+  "image" : "\uD83C\uDF5E",
+  "status" : "Active"
+}, {
+  "id" : 5,
+  "name" : "Orange Juice",
+  "category" : "Beverages",
+  "unit" : "L",
+  "mrp" : 200,
+  "price" : 180,
+  "stock" : 25,
+  "minStock" : 8,
+  "image" : "\uD83C\uDF4A",
+  "status" : "Active"
+}, {
+  "id" : 6,
+  "name" : "Pine Apples",
+  "category" : "Fruits",
+  "unit" : "kg",
+  "mrp" : 600,
+  "price" : 550,
+  "stock" : 86,
+  "minStock" : 10,
+  "image" : "\uD83C\uDF4D",
+  "status" : "Active"
+}, {
+  "id" : 7,
+  "name" : "Pine Apple Juice",
+  "category" : "Beverages",
+  "unit" : "ml",
+  "mrp" : 120,
+  "price" : 110,
+  "stock" : 70,
+  "minStock" : 20,
+  "image" : "\uD83C\uDF4D",
+  "status" : "Active"
+}, {
+  "id" : 8,
+  "name" : "Grapes",
+  "category" : "Fruits",
+  "unit" : "kg",
+  "mrp" : 450,
+  "price" : 420,
+  "stock" : 10,
+  "minStock" : 10,
+  "image" : "\uD83D\uDCE6",
+  "status" : "Active"
+}, {
+  "id" : 9,
+  "name" : "Lola Biscuits",
+  "category" : "Snackss",
+  "unit" : "kg",
+  "mrp" : 200,
+  "price" : 190,
+  "stock" : 100,
+  "minStock" : 10,
+  "image" : "\uD83D\uDCE6",
+  "status" : "Active"
+} ]

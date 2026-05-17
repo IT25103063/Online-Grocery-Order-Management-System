@@ -1,0 +1,52 @@
+[ {
+  "id" : "ORD1001",
+  "customerId" : "CUST001",
+  "customer" : "John Doe",
+  "phone" : "9876543210",
+  "address" : "Apartment 4B, Green Valley, Mumbai",
+  "items" : [ {
+    "name" : "Organic Apples",
+    "qty" : 2,
+    "price" : 220
+  }, {
+    "name" : "Whole Milk",
+    "qty" : 1,
+    "price" : 110
+  } ],
+  "subtotal" : 550,
+  "delivery" : 30,
+  "discount" : 0,
+  "total" : 580,
+  "payment" : "COD",
+  "status" : "Pending",
+  "date" : "2026-05-15",
+  "timeline" : [ {
+    "step" : "Order Placed",
+    "time" : "10:30 AM"
+  } ]
+}, {
+  "id" : "ORD1002",
+  "customerId" : "CUST002",
+  "customer" : "Jane Smith",
+  "phone" : "9876543211",
+  "address" : "House 12, Park Avenue, Pune",
+  "items" : [ {
+    "name" : "Orange Juice",
+    "qty" : 1,
+    "price" : 180
+  } ],
+  "subtotal" : 180,
+  "delivery" : 50,
+  "discount" : 0,
+  "total" : 230,
+  "payment" : "Online",
+  "status" : "Delivered",
+  "date" : "2026-05-15",
+  "timeline" : [ {
+    "step" : "Order Placed",
+    "time" : "11:00 AM"
+  }, {
+    "step" : "Delivered",
+    "time" : "12:30 PM"
+  } ]
+} ]
