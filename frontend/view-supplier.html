@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supplier Management Portal – Supplier Details</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-900:#0d3320;--green-800:#14532d;--green-700:#166534;--green-600:#16a34a;
+    --green-500:#22c55e;--green-400:#4ade80;--green-100:#dcfce7;--green-50:#f0fdf4;
+    --gray-900:#111827;--gray-700:#374151;--gray-500:#6b7280;--gray-300:#d1d5db;
+    --gray-200:#e5e7eb;--gray-100:#f3f4f6;--white:#ffffff;--red-600:#dc2626;
+    --blue-600:#2563eb;--blue-50:#eff6ff;--blue-100:#dbeafe;
+    --shadow-sm:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 4px 16px rgba(0,0,0,.10);
+    --shadow-lg:0 8px 32px rgba(0,0,0,.12);--radius:14px;--radius-sm:8px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--gray-100);color:var(--gray-900);min-height:100vh;display:flex;flex-direction:column}
+
+  /* NAVBAR */
+  .navbar{background:var(--green-900);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+  .navbar-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+  .navbar-brand .logo-icon{width:36px;height:36px;background:var(--green-500);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.25rem}
+  .navbar-brand span{font-family:'Playfair Display',serif;color:var(--white);font-size:1.15rem;letter-spacing:-.02em}
+  .nav-links{display:flex;gap:.25rem;list-style:none}
+  .nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.875rem;font-weight:500;padding:.5rem 1rem;border-radius:var(--radius-sm);transition:all .2s}
+  .nav-links a:hover{background:rgba(255,255,255,.12);color:var(--white)}
+  .nav-links a.active{background:var(--green-600);color:var(--white)}
+  .avatar{width:36px;height:36px;background:var(--green-600);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:700;font-size:.875rem}
+
+  /* LAYOUT */
+  .page-wrapper{display:flex;flex:1}
+  .sidebar{width:220px;background:var(--white);border-right:1px solid var(--gray-300);padding:1.5rem 1rem;display:flex;flex-direction:column;gap:.5rem;min-height:calc(100vh - 64px)}
+  .sidebar-section-label{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);padding:.5rem .75rem 0;margin-top:.5rem}
+  .sidebar a{display:flex;align-items:center;gap:.6rem;padding:.6rem .75rem;border-radius:var(--radius-sm);color:var(--gray-700);text-decoration:none;font-size:.875rem;font-weight:500;transition:all .18s}
+  .sidebar a:hover{background:var(--green-50);color:var(--green-700)}
+  .sidebar a.active{background:var(--green-100);color:var(--green-700);font-weight:600}
+  .main-content{flex:1;padding:2rem;overflow-x:hidden}
+
+  /* PAGE HEADER */
+  .page-header{margin-bottom:1.5rem}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gray-900);letter-spacing:-.02em}
+  .breadcrumb{font-size:.8rem;color:var(--gray-500);margin-bottom:.5rem}
+  .breadcrumb a{color:var(--gray-500);text-decoration:none}
+  .breadcrumb a:hover{color:var(--green-600)}
+  .breadcrumb span{color:var(--green-600);font-weight:600}
+
+  /* SUPPLIER HERO */
+  .supplier-hero{background:var(--white);border-radius:var(--radius);border:1px solid var(--gray-300);box-shadow:var(--shadow-sm);padding:1.75rem 2rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+  .hero-left{display:flex;align-items:center;gap:1.25rem}
+  .supplier-avatar{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--green-500),var(--green-700));display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:700;color:var(--white);flex-shrink:0;font-family:'Playfair Display',serif}
+  .hero-name{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--gray-900)}
+  .hero-id{font-size:.8rem;color:var(--gray-500);margin-top:.2rem}
+  .hero-meta{display:flex;gap:.75rem;margin-top:.6rem;flex-wrap:wrap;align-items:center}
+  .hero-actions{display:flex;gap:.6rem;flex-wrap:wrap}
+
+  /* CARDS */
+  .card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--gray-300);overflow:hidden;margin-bottom:1.5rem}
+  .card-header{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.5rem;border-bottom:1px solid var(--gray-100)}
+  .card-header h2{font-size:.95rem;font-weight:700;color:var(--gray-900);display:flex;align-items:center;gap:.5rem}
+  .card-body{padding:1.5rem}
+
+  /* INFO GRID */
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem}
+  .info-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-500);margin-bottom:.3rem}
+  .info-value{font-size:.9rem;color:var(--gray-900);font-weight:500;word-break:break-word}
+
+  /* BADGES & PILLS */
+  .badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .7rem;border-radius:99px;font-size:.72rem;font-weight:700;letter-spacing:.03em}
+  .badge-active{background:var(--green-100);color:var(--green-700)}
+  .badge-inactive{background:var(--gray-100);color:var(--gray-500)}
+  .badge-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+  .cat-pill{display:inline-block;background:var(--green-50);color:var(--green-700);border:1px solid #bbf7d0;font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:8px;margin:.2rem .2rem 0 0}
+  .stars-lg{color:#f59e0b;font-size:1.2rem;letter-spacing:.1em}
+  .order-badge{padding:.2rem .6rem;border-radius:6px;font-size:.72rem;font-weight:700}
+  .order-badge.delivered{background:#dcfce7;color:var(--green-700)}
+  .order-badge.pending{background:#fef3c7;color:#b45309}
+  .order-badge.processing{background:var(--blue-100);color:var(--blue-600)}
+  .order-badge.cancelled{background:#fee2e2;color:var(--red-600)}
+
+  /* TABLE */
+  .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:.85rem}
+  thead th{background:var(--gray-100);color:var(--gray-500);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.75rem 1rem;text-align:left;white-space:nowrap}
+  tbody tr{border-bottom:1px solid var(--gray-100);transition:background .15s}
+  tbody tr:hover{background:var(--green-50)}
+  tbody td{padding:.85rem 1rem;color:var(--gray-700);vertical-align:middle}
+  .td-name{font-weight:600;color:var(--gray-900)}
+  .td-id{font-weight:700;color:var(--green-700);font-size:.8rem}
+
+  /* BUTTONS */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.65rem 1.25rem;border-radius:var(--radius-sm);font-size:.875rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;border:none;text-decoration:none;transition:all .2s}
+  .btn-primary{background:var(--green-600);color:var(--white)}
+  .btn-primary:hover{background:var(--green-700);transform:translateY(-1px);box-shadow:0 4px 12px rgba(22,163,74,.35)}
+  .btn-outline{background:transparent;color:var(--green-700);border:2px solid var(--green-600)}
+  .btn-outline:hover{background:var(--green-50)}
+  .btn-blue{background:var(--blue-600);color:var(--white)}
+  .btn-blue:hover{background:#1d4ed8}
+  .btn-sm{padding:.4rem .85rem;font-size:.8rem}
+
+  /* TWO-COL */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+  @media(max-width:960px){.two-col{grid-template-columns:1fr}}
+
+  /* MODAL */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:opacity .25s}
+  .modal-overlay.open{opacity:1;pointer-events:all}
+  .modal{background:var(--white);border-radius:var(--radius);padding:2rem;width:100%;max-width:480px;box-shadow:var(--shadow-lg);transform:translateY(16px) scale(.97);transition:transform .25s}
+  .modal-overlay.open .modal{transform:translateY(0) scale(1)}
+  .modal h3{font-size:1.1rem;font-weight:700;margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem}
+  .modal-footer{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem}
+  .form-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+  .form-group label{font-size:.82rem;font-weight:600;color:var(--gray-700)}
+  .form-group input,.form-group select{border:1.5px solid var(--gray-300);border-radius:var(--radius-sm);padding:.6rem .9rem;font-family:'DM Sans',sans-serif;font-size:.875rem;outline:none;transition:border-color .2s}
+  .form-group input:focus,.form-group select:focus{border-color:var(--green-500);box-shadow:0 0 0 3px rgba(34,197,94,.15)}
+
+  footer{background:var(--white);border-top:1px solid var(--gray-300);padding:1rem 2rem;text-align:center;font-size:.8rem;color:var(--gray-500)}
+  footer a{color:var(--green-600);text-decoration:none}
+  @media(max-width:768px){.sidebar{display:none}.main-content{padding:1.25rem}.supplier-hero{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar-brand">
+    <div class="logo-icon">🌿</div>
+    <span>FreshLink Portal</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">📊 Dashboard</a></li>
+    <li><a href="supplier-list.html" class="active">🏭 Suppliers</a></li>
+    <li><a href="add-supplier.html">➕ Add Supplier</a></li>
+  </ul>
+  <div class="avatar">AD</div>
+</nav>
+
+<div class="page-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-section-label">Main</div>
+    <a href="index.html"><span>📊</span> Dashboard</a>
+    <a href="supplier-list.html" class="active"><span>🏭</span> Suppliers</a>
+    <a href="add-supplier.html"><span>➕</span> Add Supplier</a>
+    <div class="sidebar-section-label">Reports</div>
+    <a href="#"><span>📈</span> Analytics</a>
+    <a href="#"><span>📄</span> Reports</a>
+    <div class="sidebar-section-label">Account</div>
+    <a href="#"><span>⚙️</span> Settings</a>
+    <a href="#"><span>🚪</span> Logout</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div class="breadcrumb"><a href="index.html">Home</a> / <a href="supplier-list.html">Suppliers</a> / <span id="breadName">Supplier Details</span></div>
+      <h1 id="connection-status">Supplier Details</h1>
+    </div>
+
+    <!-- HERO -->
+    <div class="supplier-hero">
+      <div class="hero-left">
+        <div class="supplier-avatar" id="heroInitials">--</div>
+        <div>
+          <div class="hero-name" id="heroName">Loading...</div>
+          <div class="hero-id">ID: <strong id="heroId">SUP-000</strong> &nbsp;·&nbsp; Created: <span id="heroCreated">--</span></div>
+          <div class="hero-meta">
+            <span class="badge" id="heroBadge"><span class="badge-dot"></span>--</span>
+            <span class="stars-lg" id="heroStars">☆☆☆☆☆</span>
+            <div id="heroCats" style="display:inline-flex; gap:.25rem; margin-left:.5rem"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="#" id="editBtn" class="btn btn-primary">✏️ Edit Supplier</a>
+        <a href="supplier-list.html" class="btn btn-outline">← Back to List</a>
+        <button class="btn btn-blue" onclick="openProductModal()">➕ Add Product</button>
+      </div>
+    </div>
+
+    <!-- INFO CARDS (2-col) -->
+    <div class="two-col">
+      <div class="card">
+        <div class="card-header"><h2>📋 Basic Information</h2></div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">Supplier Name</div><div class="info-value" id="infoName">—</div></div>
+            <div class="info-item"><div class="info-label">Contact Person</div><div class="info-value" id="infoContact">—</div></div>
+            <div class="info-item"><div class="info-label">Email</div><div class="info-value" id="infoEmail">—</div></div>
+            <div class="info-item"><div class="info-label">Phone</div><div class="info-value" id="infoPhone">—</div></div>
+            <div class="info-item" style="grid-column:span 2"><div class="info-label">Address</div><div class="info-value" id="infoAddress">—</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h2>💼 Business Details</h2></div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">Payment Terms</div><div class="info-value" id="infoPayment">—</div></div>
+            <div class="info-item"><div class="info-label">Lead Time</div><div class="info-value" id="infoLead">—</div></div>
+            <div class="info-item"><div class="info-label">Status</div><div class="info-value" id="infoStatus">—</div></div>
+            <div class="info-item"><div class="info-label">Rating</div><div class="info-value stars-lg" id="infoRating">—</div></div>
+            <div class="info-item" style="grid-column:span 2"><div class="info-label">Categories</div><div class="info-value" id="infoCats">—</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS TABLE -->
+    <div class="card">
+      <div class="card-header">
+        <h2>📦 Products Supplied</h2>
+        <button class="btn btn-primary btn-sm" onclick="openProductModal()">+ Add Product</button>
+      </div>
+      <div class="table-wrap">
+        <table id="productsTable">
+          <thead><tr><th>Product Name</th><th>Category</th><th>Unit Price</th><th>Stock (units)</th></tr></thead>
+          <tbody id="productsBody">
+            <!-- Populated dynamically or remains static mock until products db is made -->
+            <tr><td class="td-name">Baby Spinach 500g</td><td>Vegetables</td><td>LKR 280</td><td>320</td></tr>
+            <tr><td class="td-name">Organic Carrots 1kg</td><td>Vegetables</td><td>LKR 195</td><td>450</td></tr>
+            <tr><td class="td-name">Cherry Tomatoes 250g</td><td>Vegetables</td><td>LKR 165</td><td>180</td></tr>
+            <tr><td class="td-name">Green Beans 500g</td><td>Vegetables</td><td>LKR 220</td><td>290</td></tr>
+            <tr><td class="td-name">Broccoli Head</td><td>Vegetables</td><td>LKR 340</td><td>120</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ORDERS TABLE -->
+    <div class="card">
+      <div class="card-header"><h2>🛒 Recent Orders</h2></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Order ID</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="td-id">ORD-2026-0041</td><td>May 14, 2026</td><td>3 items</td><td>LKR 18,450</td><td><span class="order-badge delivered">Delivered</span></td></tr>
+            <tr><td class="td-id">ORD-2026-0038</td><td>May 10, 2026</td><td>5 items</td><td>LKR 32,100</td><td><span class="order-badge processing">Processing</span></td></tr>
+            <tr><td class="td-id">ORD-2026-0031</td><td>May 02, 2026</td><td>2 items</td><td>LKR 9,800</td><td><span class="order-badge delivered">Delivered</span></td></tr>
+            <tr><td class="td-id">ORD-2026-0024</td><td>Apr 25, 2026</td><td>7 items</td><td>LKR 56,340</td><td><span class="order-badge delivered">Delivered</span></td></tr>
+            <tr><td class="td-id">ORD-2026-0018</td><td>Apr 18, 2026</td><td>1 item</td><td>LKR 4,200</td><td><span class="order-badge cancelled">Cancelled</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ADD PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <h3>📦 Add Product</h3>
+    <div class="form-group">
+      <label>Product Name</label>
+      <input type="text" id="prodName" placeholder="e.g. Organic Spinach 250g">
+    </div>
+    <div class="form-group">
+      <label>Category</label>
+      <select id="prodCat">
+        <option>Vegetables</option><option>Fruits</option><option>Dairy</option>
+        <option>Meat</option><option>Bakery</option><option>Beverages</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Unit Price (LKR)</label>
+      <input type="number" id="prodPrice" placeholder="0">
+    </div>
+    <div class="form-group">
+      <label>Stock (units)</label>
+      <input type="number" id="prodStock" placeholder="0">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeProductModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveProduct()">✅ Add Product</button>
+    </div>
+  </div>
+</div>
+
+<footer>&copy; <span id="year"></span> FreshLink Supplier Portal &mdash; <a href="#">GroceryOnline</a></footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+const API_BASE = window.location.origin.startsWith('http') 
+  ? `${window.location.origin}/api/suppliers` 
+  : 'http://localhost:8080/api/suppliers';
+const PRODUCTS_API = window.location.origin.startsWith('http') 
+  ? `${window.location.origin}/api/products` 
+  : 'http://localhost:8080/api/products';
+
+const params = new URLSearchParams(location.search);
+const supplierId = params.get('id') || 'SUP-001';
+
+function starStr(n){ return '★'.repeat(n)+'☆'.repeat(5-n); }
+function initials(name){ return name ? name.split(' ').slice(0,2).map(w=>w[0]).join('') : '--'; }
+
+async function fetchSupplierDetails() {
+  try {
+    const res = await fetch(`${API_BASE}?id=${supplierId}`);
+    if (!res.ok) {
+      alert(`Supplier with ID ${supplierId} not found.`);
+      window.location.href = 'supplier-list.html';
+      return;
+    }
+
+    const s = await res.json();
+    populateUI(s);
+    await fetchSupplierProducts();
+  } catch (err) {
+    console.error('Fetch failed:', err);
+    document.getElementById('connection-status').innerHTML = `Supplier Details <span style="color:var(--red-600);font-size:1rem;font-weight:normal;">(Offline Mode)</span>`;
+    
+    // Offline local fallback mock data
+    const mockData = {
+      'SUP-001':{id:'SUP-001',supplierName:'Green Valley Farms (Mock)',contactPerson:'Amara Nwosu',email:'amara@greenvalley.lk',phone:'+94 77 123 4567',address:'123 Farm Lane, Kandy, Central Province, Sri Lanka',paymentTerms:'Net 30',leadTime:3,rating:5,status:'active',categories:['Vegetables'],createdDate:'2025-03-12'},
+      'SUP-002':{id:'SUP-002',supplierName:'Sunrise Dairy Co. (Mock)',contactPerson:'Priya Mehta',email:'priya@sunrisedairy.lk',phone:'+94 71 987 6543',address:'45 Dairy Road, Nuwara Eliya, Central Province, Sri Lanka',paymentTerms:'Net 15',leadTime:2,rating:4,status:'active',categories:['Dairy'],createdDate:'2025-04-02'},
+      'SUP-003':{id:'SUP-003',supplierName:'Tropical Fresh Ltd. (Mock)',contactPerson:'Carlos Reyes',email:'carlos@tropicalfresh.lk',phone:'+94 76 555 0123',address:'78 Orchard Drive, Galle, Southern Province, Sri Lanka',paymentTerms:'Net 45',leadTime:5,rating:4,status:'active',categories:['Fruits'],createdDate:'2025-05-18'},
+    };
+    const s = mockData[supplierId] || mockData['SUP-001'];
+    populateUI(s);
+    await fetchSupplierProducts();
+  }
+}
+
+async function fetchSupplierProducts() {
+  try {
+    const res = await fetch(`${PRODUCTS_API}?supplierId=${supplierId}`);
+    if (!res.ok) throw new Error('API error fetching products');
+    const list = await res.json();
+    renderProducts(list);
+  } catch (err) {
+    console.error('Fetch products failed, using mock fallbacks:', err);
+    // Realistic fallback mock products mapped to standard supplier types
+    const mocks = [
+      { productName: 'Baby Spinach 500g', category: 'Vegetables', unitPrice: 280, stockCount: 320 },
+      { productName: 'Organic Carrots 1kg', category: 'Vegetables', unitPrice: 195, stockCount: 450 },
+      { productName: 'Cherry Tomatoes 250g', category: 'Vegetables', unitPrice: 165, stockCount: 180 },
+      { productName: 'Green Beans 500g', category: 'Vegetables', unitPrice: 220, stockCount: 290 },
+      { productName: 'Broccoli Head', category: 'Vegetables', unitPrice: 340, stockCount: 120 }
+    ];
+    renderProducts(mocks);
+  }
+}
+
+function renderProducts(list) {
+  const tbody = document.getElementById('productsBody');
+  tbody.innerHTML = '';
+  if (list.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:1.5rem; color:var(--gray-500)">No products registered for this supplier yet.</td></tr>';
+    return;
+  }
+  list.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="td-name">${p.productName}</td>
+      <td>${p.category}</td>
+      <td>LKR ${p.unitPrice}</td>
+      <td>${p.stockCount}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function populateUI(s) {
+  // Breadcrumb & title
+  document.getElementById('breadName').textContent = s.supplierName;
+  
+  // Hero section
+  document.getElementById('heroInitials').textContent = initials(s.supplierName);
+  document.getElementById('heroName').textContent = s.supplierName;
+  document.getElementById('heroId').textContent = s.id;
+  document.getElementById('heroCreated').textContent = s.createdDate || 'Recently';
+  document.getElementById('heroStars').textContent = starStr(s.rating);
+  document.getElementById('editBtn').href = `edit-supplier.html?id=${s.id}`;
+  
+  const heroBadge = document.getElementById('heroBadge');
+  heroBadge.className = `badge badge-${s.status}`;
+  heroBadge.innerHTML = `<span class="badge-dot"></span>${s.status.charAt(0).toUpperCase() + s.status.slice(1)}`;
+  
+  if (s.categories) {
+    document.getElementById('heroCats').innerHTML = s.categories.map(c => `<span class="cat-pill">${c}</span>`).join('');
+  }
+
+  // Info details section
+  document.getElementById('infoName').textContent = s.supplierName;
+  document.getElementById('infoContact').textContent = s.contactPerson;
+  document.getElementById('infoEmail').textContent = s.email;
+  document.getElementById('infoPhone').textContent = s.phone;
+  document.getElementById('infoAddress').textContent = s.address;
+  document.getElementById('infoPayment').textContent = s.paymentTerms;
+  document.getElementById('infoLead').textContent = `${s.leadTime} days`;
+  document.getElementById('infoStatus').innerHTML = `<span class="badge badge-${s.status}"><span class="badge-dot"></span>${s.status.charAt(0).toUpperCase() + s.status.slice(1)}</span>`;
+  document.getElementById('infoRating').textContent = starStr(s.rating);
+  
+  if (s.categories) {
+    document.getElementById('infoCats').innerHTML = s.categories.map(c => `<span class="cat-pill">${c}</span>`).join('');
+  }
+
+  // Setup specific category options in products modal
+  if (s.categories && s.categories.length > 0) {
+    const prodCatSelect = document.getElementById('prodCat');
+    prodCatSelect.innerHTML = '';
+    s.categories.forEach(c => {
+      const opt = document.createElement('option');
+      opt.textContent = c;
+      prodCatSelect.appendChild(opt);
+    });
+  }
+}
+
+function openProductModal(){ document.getElementById('productModal').classList.add('open'); }
+function closeProductModal(){ document.getElementById('productModal').classList.remove('open'); }
+
+async function saveProduct(){
+  const name = document.getElementById('prodName').value.trim();
+  const cat = document.getElementById('prodCat').value;
+  const price = parseInt(document.getElementById('prodPrice').value) || 0;
+  const stock = parseInt(document.getElementById('prodStock').value) || 0;
+
+  if (!name) {
+    alert('Please enter a product name.');
+    return;
+  }
+
+  const payload = {
+    supplierId: supplierId,
+    productName: name,
+    category: cat,
+    unitPrice: price.toString(),
+    stockCount: stock.toString()
+  };
+
+  try {
+    const res = await fetch(PRODUCTS_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error('API write error');
+
+    // Refresh live products list from server
+    await fetchSupplierProducts();
+    alert(`✅ Product "${name}" successfully saved in database!`);
+  } catch (err) {
+    console.error('Failed to save product in database, inserting locally:', err);
+    // Offline local rendering fallback
+    const tbody = document.getElementById('productsBody');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="td-name">${name} (Offline Mock)</td>
+      <td>${cat}</td>
+      <td>LKR ${price}</td>
+      <td>${stock}</td>
+    `;
+    tbody.insertBefore(tr, tbody.firstChild);
+    alert(`⚠️ Saved locally (Offline Mode). Server failed: ${err.message}`);
+  }
+
+  // Clear inputs
+  document.getElementById('prodName').value = '';
+  document.getElementById('prodPrice').value = '';
+  document.getElementById('prodStock').value = '';
+
+  closeProductModal();
+}
+
+// Start
+fetchSupplierDetails();
+</script>
+</body>
+</html>

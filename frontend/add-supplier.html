@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supplier Management Portal – Add Supplier</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-900:#0d3320;--green-800:#14532d;--green-700:#166534;--green-600:#16a34a;
+    --green-500:#22c55e;--green-400:#4ade80;--green-100:#dcfce7;--green-50:#f0fdf4;
+    --gray-900:#111827;--gray-700:#374151;--gray-500:#6b7280;--gray-300:#d1d5db;
+    --gray-200:#e5e7eb;--gray-100:#f3f4f6;--white:#ffffff;--red-600:#dc2626;--red-50:#fef2f2;
+    --shadow-sm:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 4px 16px rgba(0,0,0,.1);
+    --radius:14px;--radius-sm:8px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--gray-100);color:var(--gray-900);min-height:100vh;display:flex;flex-direction:column}
+
+  .navbar{background:var(--green-900);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+  .navbar-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+  .navbar-brand .logo-icon{width:36px;height:36px;background:var(--green-500);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.25rem}
+  .navbar-brand span{font-family:'Playfair Display',serif;color:var(--white);font-size:1.15rem;letter-spacing:-.02em}
+  .nav-links{display:flex;gap:.25rem;list-style:none}
+  .nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.875rem;font-weight:500;padding:.5rem 1rem;border-radius:var(--radius-sm);transition:all .2s}
+  .nav-links a:hover{background:rgba(255,255,255,.12);color:var(--white)}
+  .nav-links a.active{background:var(--green-600);color:var(--white)}
+  .avatar{width:36px;height:36px;background:var(--green-600);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:700;font-size:.875rem}
+
+  .page-wrapper{display:flex;flex:1}
+  .sidebar{width:220px;background:var(--white);border-right:1px solid var(--gray-300);padding:1.5rem 1rem;display:flex;flex-direction:column;gap:.5rem;min-height:calc(100vh - 64px)}
+  .sidebar-section-label{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);padding:.5rem .75rem 0;margin-top:.5rem}
+  .sidebar a{display:flex;align-items:center;gap:.6rem;padding:.6rem .75rem;border-radius:var(--radius-sm);color:var(--gray-700);text-decoration:none;font-size:.875rem;font-weight:500;transition:all .18s}
+  .sidebar a:hover{background:var(--green-50);color:var(--green-700)}
+  .sidebar a.active{background:var(--green-100);color:var(--green-700);font-weight:600}
+  .main-content{flex:1;padding:2rem;overflow-x:hidden}
+
+  .page-header{margin-bottom:1.75rem}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gray-900);letter-spacing:-.02em}
+  .page-header p{color:var(--gray-500);font-size:.9rem;margin-top:.25rem}
+  .breadcrumb{font-size:.8rem;color:var(--gray-500);margin-bottom:.5rem}
+  .breadcrumb span{color:var(--green-600);font-weight:600}
+
+  /* FORM CARD */
+  .form-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--gray-300);overflow:hidden;max-width:820px}
+  .form-section{padding:1.5rem 2rem;border-bottom:1px solid var(--gray-200)}
+  .form-section:last-child{border-bottom:none}
+  .form-section-title{font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green-700);margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem}
+  .form-section-title::after{content:'';flex:1;height:1px;background:var(--green-100)}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+  .form-grid.cols-1{grid-template-columns:1fr}
+  .form-group{display:flex;flex-direction:column;gap:.4rem}
+  .form-group.span-2{grid-column:span 2}
+  label{font-size:.82rem;font-weight:600;color:var(--gray-700)}
+  label .req{color:var(--red-600);margin-left:.15rem}
+  input[type=text],input[type=email],input[type=tel],input[type=number],textarea,select{
+    width:100%;border:1.5px solid var(--gray-300);border-radius:var(--radius-sm);
+    padding:.65rem .9rem;font-family:'DM Sans',sans-serif;font-size:.875rem;
+    color:var(--gray-900);outline:none;transition:border-color .2s,box-shadow .2s;background:var(--white)
+  }
+  input:focus,textarea:focus,select:focus{border-color:var(--green-500);box-shadow:0 0 0 3px rgba(34,197,94,.15)}
+  input.error,textarea.error,select.error{border-color:var(--red-600);box-shadow:0 0 0 3px rgba(220,38,38,.12)}
+  textarea{resize:vertical;min-height:90px}
+  .error-msg{font-size:.75rem;color:var(--red-600);font-weight:500;display:none}
+  .form-group.has-error .error-msg{display:block}
+
+  /* CHECKBOXES */
+  .checkbox-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+  .checkbox-label{display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--gray-700);cursor:pointer;padding:.5rem .75rem;border:1.5px solid var(--gray-300);border-radius:var(--radius-sm);transition:all .18s}
+  .checkbox-label:hover{border-color:var(--green-400);background:var(--green-50)}
+  .checkbox-label input[type=checkbox]:checked+span{color:var(--green-700);font-weight:600}
+  .checkbox-label:has(input:checked){border-color:var(--green-500);background:var(--green-50)}
+  input[type=checkbox]{accent-color:var(--green-600);width:15px;height:15px;cursor:pointer}
+
+  /* RADIO */
+  .radio-group{display:flex;gap:1rem}
+  .radio-label{display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.875rem;color:var(--gray-700);padding:.55rem 1rem;border:1.5px solid var(--gray-300);border-radius:var(--radius-sm);transition:all .18s}
+  .radio-label:hover{border-color:var(--green-400);background:var(--green-50)}
+  .radio-label:has(input:checked){border-color:var(--green-500);background:var(--green-50);color:var(--green-700);font-weight:600}
+  input[type=radio]{accent-color:var(--green-600)}
+
+  /* FORM FOOTER */
+  .form-footer{padding:1.5rem 2rem;background:var(--gray-100);display:flex;gap:.75rem;justify-content:flex-end}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.7rem 1.5rem;border-radius:var(--radius-sm);font-size:.875rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;border:none;text-decoration:none;transition:all .2s}
+  .btn-primary{background:var(--green-600);color:var(--white)}
+  .btn-primary:hover{background:var(--green-700);transform:translateY(-1px);box-shadow:0 4px 12px rgba(22,163,74,.35)}
+  .btn-outline{background:transparent;color:var(--green-700);border:2px solid var(--green-600)}
+  .btn-outline:hover{background:var(--green-50)}
+
+  /* TOAST */
+  .toast{position:fixed;bottom:2rem;right:2rem;background:var(--green-800);color:var(--white);padding:1rem 1.5rem;border-radius:var(--radius-sm);font-size:.875rem;font-weight:500;box-shadow:var(--shadow-md);transform:translateY(80px);opacity:0;transition:all .35s;z-index:9999;display:flex;align-items:center;gap:.75rem}
+  .toast.show{transform:translateY(0);opacity:1}
+
+  footer{background:var(--white);border-top:1px solid var(--gray-300);padding:1rem 2rem;text-align:center;font-size:.8rem;color:var(--gray-500)}
+  footer a{color:var(--green-600);text-decoration:none}
+  @media(max-width:768px){.sidebar{display:none}.main-content{padding:1.25rem}.form-grid{grid-template-columns:1fr}.form-group.span-2{grid-column:span 1}.checkbox-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar-brand">
+    <div class="logo-icon">🌿</div>
+    <span>FreshLink Portal</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">📊 Dashboard</a></li>
+    <li><a href="supplier-list.html">🏭 Suppliers</a></li>
+    <li><a href="add-supplier.html" class="active">➕ Add Supplier</a></li>
+  </ul>
+  <div class="avatar">AD</div>
+</nav>
+
+<div class="page-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-section-label">Main</div>
+    <a href="index.html"><span>📊</span> Dashboard</a>
+    <a href="supplier-list.html"><span>🏭</span> Suppliers</a>
+    <a href="add-supplier.html" class="active"><span>➕</span> Add Supplier</a>
+    <div class="sidebar-section-label">Reports</div>
+    <a href="#"><span>📈</span> Analytics</a>
+    <a href="#"><span>📄</span> Reports</a>
+    <div class="sidebar-section-label">Account</div>
+    <a href="#"><span>⚙️</span> Settings</a>
+    <a href="#"><span>🚪</span> Logout</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div class="breadcrumb">Home / <a href="supplier-list.html" style="color:var(--gray-500);text-decoration:none">Suppliers</a> / <span>Add Supplier</span></div>
+      <h1 id="page-title">Add New Supplier</h1>
+      <p>Fill in the details below to register a new supplier in the system.</p>
+    </div>
+
+    <form class="form-card" id="addForm" novalidate>
+
+      <!-- BASIC INFO -->
+      <div class="form-section">
+        <div class="form-section-title">🏢 Basic Information</div>
+        <div class="form-grid">
+          <div class="form-group" id="g-name">
+            <label>Supplier Name<span class="req">*</span></label>
+            <input type="text" id="supplierName" placeholder="e.g. Green Valley Farms">
+            <span class="error-msg">Supplier name is required.</span>
+          </div>
+          <div class="form-group" id="g-contact">
+            <label>Contact Person<span class="req">*</span></label>
+            <input type="text" id="contactPerson" placeholder="e.g. Amara Nwosu">
+            <span class="error-msg">Contact person is required.</span>
+          </div>
+          <div class="form-group" id="g-email">
+            <label>Email Address<span class="req">*</span></label>
+            <input type="email" id="email" placeholder="supplier@example.com">
+            <span class="error-msg">A valid email is required.</span>
+          </div>
+          <div class="form-group" id="g-phone">
+            <label>Phone Number<span class="req">*</span></label>
+            <input type="tel" id="phone" placeholder="+94 77 123 4567">
+            <span class="error-msg">Phone number is required.</span>
+          </div>
+          <div class="form-group span-2" id="g-address">
+            <label>Address<span class="req">*</span></label>
+            <textarea id="address" placeholder="Street, City, Province, Country"></textarea>
+            <span class="error-msg">Address is required.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BUSINESS DETAILS -->
+      <div class="form-section">
+        <div class="form-section-title">📋 Business Details</div>
+        <div class="form-grid">
+          <div class="form-group" id="g-payment">
+            <label>Payment Terms<span class="req">*</span></label>
+            <select id="paymentTerms">
+              <option value="">Select payment terms…</option>
+              <option>Net 15</option>
+              <option>Net 30</option>
+              <option>Net 45</option>
+              <option>COD</option>
+            </select>
+            <span class="error-msg">Please select payment terms.</span>
+          </div>
+          <div class="form-group" id="g-leadtime">
+            <label>Lead Time (days)<span class="req">*</span></label>
+            <input type="number" id="leadTime" placeholder="e.g. 3" min="1" max="90">
+            <span class="error-msg">Lead time is required.</span>
+          </div>
+          <div class="form-group" id="g-rating">
+            <label>Rating<span class="req">*</span></label>
+            <select id="rating">
+              <option value="">Select rating…</option>
+              <option value="1">⭐ 1 Star</option>
+              <option value="2">⭐⭐ 2 Stars</option>
+              <option value="3">⭐⭐⭐ 3 Stars</option>
+              <option value="4">⭐⭐⭐⭐ 4 Stars</option>
+              <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
+            </select>
+            <span class="error-msg">Please select a rating.</span>
+          </div>
+          <div class="form-group" id="g-status">
+            <label>Status<span class="req">*</span></label>
+            <div class="radio-group">
+              <label class="radio-label"><input type="radio" name="status" value="active" checked><span>✅ Active</span></label>
+              <label class="radio-label"><input type="radio" name="status" value="inactive"><span>⏸️ Inactive</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORIES -->
+      <div class="form-section">
+        <div class="form-section-title">🏷️ Product Categories</div>
+        <div class="form-group" id="g-categories">
+          <div class="checkbox-grid">
+            <label class="checkbox-label"><input type="checkbox" value="Vegetables"><span>🥦 Vegetables</span></label>
+            <label class="checkbox-label"><input type="checkbox" value="Fruits"><span>🍎 Fruits</span></label>
+            <label class="checkbox-label"><input type="checkbox" value="Dairy"><span>🥛 Dairy</span></label>
+            <label class="checkbox-label"><input type="checkbox" value="Meat"><span>🥩 Meat</span></label>
+            <label class="checkbox-label"><input type="checkbox" value="Bakery"><span>🍞 Bakery</span></label>
+            <label class="checkbox-label"><input type="checkbox" value="Beverages"><span>🧃 Beverages</span></label>
+          </div>
+          <span class="error-msg" id="cat-error" style="display:none">Please select at least one category.</span>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <button type="button" class="btn btn-outline" onclick="resetForm()">↩ Cancel / Reset</button>
+        <button type="submit" class="btn btn-primary" id="submitBtn">✅ Submit Supplier</button>
+      </div>
+    </form>
+  </main>
+</div>
+
+<div class="toast" id="toast">✅ Supplier added successfully! Redirecting...</div>
+
+<footer>&copy; <span id="year"></span> FreshLink Supplier Portal &mdash; <a href="#">GroceryOnline</a></footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+const API_BASE = window.location.origin.startsWith('http') 
+  ? `${window.location.origin}/api/suppliers` 
+  : 'http://localhost:8080/api/suppliers';
+
+function setErr(id, show){
+  const g = document.getElementById('g-'+id);
+  if(g) g.classList.toggle('has-error', show);
+}
+function setFieldErr(el, show){
+  el.classList.toggle('error', show);
+}
+
+document.getElementById('addForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  let valid = true;
+
+  const fields = [
+    {id:'supplierName', gid:'name', type:'text'},
+    {id:'contactPerson', gid:'contact', type:'text'},
+    {id:'email', gid:'email', type:'email'},
+    {id:'phone', gid:'phone', type:'text'},
+    {id:'address', gid:'address', type:'text'},
+    {id:'paymentTerms', gid:'payment', type:'select'},
+    {id:'leadTime', gid:'leadtime', type:'text'},
+    {id:'rating', gid:'rating', type:'select'},
+  ];
+
+  fields.forEach(f => {
+    const el = document.getElementById(f.id);
+    let empty = !el.value.trim();
+    if(f.type === 'email' && !empty) empty = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+    setFieldErr(el, empty);
+    setErr(f.gid, empty);
+    if(empty) valid = false;
+  });
+
+  const cats = [...document.querySelectorAll('.checkbox-grid input:checked')];
+  const catErr = cats.length === 0;
+  document.getElementById('cat-error').style.display = catErr ? 'block' : 'none';
+  if(catErr) valid = false;
+
+  if(!valid) return;
+
+  // Compile JSON data
+  const data = {
+    supplierName: document.getElementById('supplierName').value.trim(),
+    contactPerson: document.getElementById('contactPerson').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    address: document.getElementById('address').value.trim(),
+    paymentTerms: document.getElementById('paymentTerms').value,
+    leadTime: parseInt(document.getElementById('leadTime').value, 10) || 0,
+    rating: parseInt(document.getElementById('rating').value, 10) || 3,
+    status: document.querySelector('input[name=status]:checked').value,
+    categories: cats.map(c => c.value)
+  };
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving Supplier...';
+
+  try {
+    const res = await fetch(API_BASE, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      showToast();
+      this.reset();
+      setTimeout(() => {
+        window.location.href = 'supplier-list.html';
+      }, 1500);
+    } else {
+      const errText = await res.text();
+      alert(`Error creating supplier: ${errText}`);
+    }
+  } catch (err) {
+    console.error('Failed to submit:', err);
+    alert(`Could not connect to backend Java server. Please ensure the server is running on port 8080.`);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✅ Submit Supplier';
+  }
+});
+
+function showToast(){
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+}
+
+function resetForm(){
+  document.getElementById('addForm').reset();
+  document.querySelectorAll('.has-error').forEach(el=>el.classList.remove('has-error'));
+  document.querySelectorAll('.error').forEach(el=>el.classList.remove('error'));
+  document.getElementById('cat-error').style.display = 'none';
+}
+</script>
+</body>
+</html>

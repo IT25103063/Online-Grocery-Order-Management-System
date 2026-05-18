@@ -1,0 +1,5 @@
+SUP-001|Fresh Farms|Amara Nwosu|amara@freshfarms.com|+94 77 123 4567|12 Greenway Road, Colombo 07, Sri Lanka|Vegetables,Fruits|Net 30|2|5|active|2025-01-10|2025-01-10
+SUP-002|Daily Dairy|Priya Mehta|priya@dailydairy.com|+94 71 234 5678|45 Milk Lane, Kandy, Sri Lanka|Dairy|Net 15|1|4|active|2025-01-12|2025-01-12
+SUP-003|Organic Valley|Carlos Reyes|carlos@organicvalley.com|+94 76 345 6789|88 Harvest Hill, Nuwara Eliya, Sri Lanka|Vegetables,Fruits,Beverages|Net 45|3|5|active|2025-01-15|2025-02-01
+SUP-004|Meat Masters|James Owens|james@meatmasters.com|+94 72 456 7890|22 Butcher Street, Galle, Sri Lanka|Meat|COD|1|4|active|2025-01-18|2025-01-18
+SUP-005|Bakery Bliss|Emma Thompson|emma@bakerybliss.com|+94 70 567 8901|7 Flour Court, Matara, Sri Lanka|Bakery|Net 30|2|3|inactive|2025-01-20|2025-03-05

@@ -1,0 +1,14 @@
+# Products Database
+# Format: productId|supplierId|productName|category|unitPrice|stockCount
+PROD-001|SUP-001|Baby Spinach 500g|Vegetables|280|320
+PROD-002|SUP-001|Organic Carrots 1kg|Vegetables|195|450
+PROD-003|SUP-001|Cherry Tomatoes 250g|Vegetables|165|180
+PROD-004|SUP-002|Fresh Milk 1L|Dairy|290|500
+PROD-005|SUP-002|Salted Butter 200g|Dairy|540|250
+PROD-006|SUP-002|Cheddar Cheese 250g|Dairy|750|150
+PROD-007|SUP-003|Fresh Orange Juice 1L|Beverages|380|220
+PROD-008|SUP-003|Organic Strawberries 250g|Fruits|450|120
+PROD-009|SUP-004|Chicken Breast 1kg|Meat|1450|90
+PROD-010|SUP-004|Beef Tenderloin 1kg|Meat|2600|40
+PROD-011|SUP-005|Chocolate Chip Cookies 200g|Bakery|320|180
+PROD-012|SUP-005|Whole Wheat Bread 450g|Bakery|180|240
