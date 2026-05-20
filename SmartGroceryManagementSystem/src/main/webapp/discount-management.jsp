@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ page import="java.util.Map, double[]" %>
+
 
 <c:if test="${empty sessionScope.user}"><c:redirect url="login.jsp" /></c:if>
 <c:set var="pageTitle" value="Discount Management" scope="request" />
@@ -58,9 +58,7 @@
                     </thead>
                     <tbody id="discTable">
                     <c:forEach var="prod" items="${products}">
-                        <%
-                            Map<String, double[]> disc = (Map<String, double[]>) request.getAttribute("discounts");
-                        %>
+
                         <c:set var="d" value="${discounts[prod.id]}" />
                         <tr data-name="${prod.name.toLowerCase()}" data-cat="${prod.category}">
                             <td class="ps-4 fw-semibold">${prod.name}</td>

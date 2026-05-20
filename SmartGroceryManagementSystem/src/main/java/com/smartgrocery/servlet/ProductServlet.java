@@ -39,32 +39,19 @@ public class ProductServlet extends HttpServlet {
 
         switch (action) {
             case "new":
-                // ONLY ADMIN can add new products
-                if (!"ADMIN".equals(user.getRole())) {
-                    response.sendRedirect("dashboard.jsp?error=AccessDenied");
-                    return;
-                }
+                if (!"ADMIN".equals(user.getRole())) { response.sendRedirect("dashboard.jsp?error=AccessDenied"); return; }
                 showNewForm(request, response);
                 break;
             case "edit":
-                // ONLY ADMIN can edit products
-                if (!"ADMIN".equals(user.getRole())) {
-                    response.sendRedirect("dashboard.jsp?error=AccessDenied");
-                    return;
-                }
+                if (!"ADMIN".equals(user.getRole())) { response.sendRedirect("dashboard.jsp?error=AccessDenied"); return; }
                 showEditForm(request, response);
                 break;
             case "delete":
-                // ONLY ADMIN can delete products
-                if (!"ADMIN".equals(user.getRole())) {
-                    response.sendRedirect("dashboard.jsp?error=AccessDenied");
-                    return;
-                }
+                if (!"ADMIN".equals(user.getRole())) { response.sendRedirect("dashboard.jsp?error=AccessDenied"); return; }
                 deleteProduct(request, response);
                 break;
             case "list":
             default:
-                // EVERYONE can view products
                 listProducts(request, response);
                 break;
         }
@@ -77,14 +64,8 @@ public class ProductServlet extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
-
         User user = (User) session.getAttribute("user");
-
-        // ONLY ADMIN can save or update products
-        if (!"ADMIN".equals(user.getRole())) {
-            response.sendRedirect("dashboard.jsp?error=AccessDenied");
-            return;
-        }
+        if (!"ADMIN".equals(user.getRole())) { response.sendRedirect("dashboard.jsp?error=AccessDenied"); return; }
 
         String action = request.getParameter("action");
         if ("save".equals(action) || "update".equals(action)) {
@@ -94,13 +75,14 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
+    // ✅ UPDATED: filters by category from category card clicks
     private void listProducts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String search = request.getParameter("search");
+        String category = request.getParameter("category");
         List<Product> list;
 
-        if (search != null && !search.trim().isEmpty()) {
-            list = productService.searchProducts(search);
-            request.setAttribute("searchQuery", search);
+        if (category != null && !category.trim().isEmpty()) {
+            list = productService.getProductsByCategory(category.trim());
+            request.setAttribute("selectedCategory", category.trim());
         } else {
             list = productService.getAllProducts();
         }
@@ -116,7 +98,6 @@ public class ProductServlet extends HttpServlet {
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         Product p = productService.getProductById(id);
-
         if (p != null) {
             request.setAttribute("productObj", p);
             if (p instanceof PerishableProduct) {
@@ -131,20 +112,20 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void saveOrUpdateProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        String name = request.getParameter("name");
-        String price = request.getParameter("price");
-        String stock = request.getParameter("stock");
-        String type = request.getParameter("type");
+        String id           = request.getParameter("id");
+        String name         = request.getParameter("name");
+        String price        = request.getParameter("price");
+        String stock        = request.getParameter("stock");
+        String type         = request.getParameter("type");
         String specialField = request.getParameter("specialField");
+        String category     = request.getParameter("category"); // ✅ NEW
 
-        String result = productService.saveOrUpdate(id, name, price, stock, type, specialField);
+        String result = productService.saveOrUpdate(id, name, price, stock, type, specialField, category);
 
         if ("SUCCESS".equals(result)) {
             String msg = (id == null || id.trim().isEmpty()) ? "ProductCreated" : "ProductUpdated";
             response.sendRedirect("products?action=list&msg=" + msg);
         } else {
-            // Repopulate form on error
             if (id != null && !id.isEmpty()) {
                 request.setAttribute("productObj", productService.getProductById(id));
             }

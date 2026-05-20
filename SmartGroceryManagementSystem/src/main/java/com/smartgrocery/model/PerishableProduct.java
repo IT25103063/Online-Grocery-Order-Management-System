@@ -1,9 +1,5 @@
 package com.smartgrocery.model;
 
-/**
- * Represents a perishable grocery item.
- * Demonstrates Inheritance (extends Product).
- */
 public class PerishableProduct extends Product {
 
     private String expirationDate;
@@ -13,21 +9,16 @@ public class PerishableProduct extends Product {
         this.setType("PERISHABLE");
     }
 
-    public PerishableProduct(String id, String name, double price, int stock, String expirationDate) {
-        super(id, name, price, stock, "PERISHABLE");
+    public PerishableProduct(String id, String name, double price, int stock, String expirationDate, String category) {
+        super(id, name, price, stock, "PERISHABLE", category);
         this.expirationDate = expirationDate;
     }
 
-    public String getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(String expirationDate) {
-        this.expirationDate = expirationDate;
-    }
+    public String getExpirationDate() { return expirationDate; }
+    public void setExpirationDate(String expirationDate) { this.expirationDate = expirationDate; }
 
     @Override
     public String getSpecialDetail() {
-        return "Expires on: " + expirationDate;
+        return "Expires: " + expirationDate;
     }
 }
