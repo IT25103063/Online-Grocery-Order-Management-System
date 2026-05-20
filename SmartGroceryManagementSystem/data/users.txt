@@ -12,4 +12,5 @@ U-004|jane_smith|jane123|jane@example.com|CUSTOMER
 U-005|mike_wilson|mike123|mike@example.com|CUSTOMER
 U-006|sarah_jones|sarah123|sarah@example.com|CUSTOMER
 U-007|david_brown|david123|david@example.com|CUSTOMER
-U-008|lisa_white|lisa123|lisa@example.com|CUSTOMER
+U-008|lisa_white|lisa123|lisa@example.com|CUSTOMER58fd3bca|asdfg|super123|test@test.com|Standard
+

@@ -1,5 +1,6 @@
 package com.smartgrocery.servlet;
 
+import com.smartgrocery.model.AdminUser;
 import com.smartgrocery.model.User;
 import com.smartgrocery.service.AuthService;
 import jakarta.servlet.ServletException;
@@ -23,9 +24,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Redirect to dashboard if already logged in
         if (request.getSession().getAttribute("user") != null) {
-            response.sendRedirect("dashboard.jsp");
+            response.sendRedirect("dashboard");
             return;
         }
         request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -33,18 +33,44 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String username  = request.getParameter("username");
+        String password  = request.getParameter("password");
+        String loginType = request.getParameter("loginType"); // "customer" or "admin"
 
         User user = authService.login(username, password);
 
         if (user != null) {
-            // Success: Create session
+            // Validate correct login type
+            boolean isAdmin    = user instanceof AdminUser;
+            boolean wantsAdmin = "admin".equals(loginType);
+
+            if (isAdmin && !wantsAdmin) {
+                // Admin trying customer tab
+                request.setAttribute("errorMessage", "Please use the Admin tab to sign in.");
+                request.setAttribute("loginType", "customer");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            }
+            if (!isAdmin && wantsAdmin) {
+                // Customer trying admin tab
+                request.setAttribute("errorMessage", "No admin account found with these credentials.");
+                request.setAttribute("loginType", "admin");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            }
+
+            // All good — create session
             HttpSession session = request.getSession();
-            session.setAttribute("user", user); // Stores polymorphic object
-            response.sendRedirect("dashboard.jsp");
+            session.setAttribute("user", user);
+
+            // Redirect based on role
+            if (isAdmin) {
+                response.sendRedirect("dashboard"); // admin sees same dashboard with admin features
+            } else {
+                response.sendRedirect("dashboard");
+            }
+
         } else {
-            // Failure: Forward back with error message
             request.setAttribute("errorMessage", "Invalid username or password.");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }

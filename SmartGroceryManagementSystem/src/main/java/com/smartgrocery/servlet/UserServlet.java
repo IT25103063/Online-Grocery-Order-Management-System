@@ -38,7 +38,18 @@ public class UserServlet extends HttpServlet {
         User loggedInUser = (User) session.getAttribute("user");
 
         // ONLY ADMIN can access user management
+        // Allow customer to delete their own account only
         if (!"ADMIN".equals(loggedInUser.getRole())) {
+            String action = request.getParameter("action");
+            if ("delete".equals(action)) {
+                String idToDelete = request.getParameter("id");
+                if (idToDelete.equals(loggedInUser.getId())) {
+                    userService.deleteUser(idToDelete);
+                    session.invalidate();
+                    response.sendRedirect(request.getContextPath() + "/login");
+                    return;
+                }
+            }
             response.sendRedirect("dashboard.jsp?error=AccessDenied");
             return;
         }
